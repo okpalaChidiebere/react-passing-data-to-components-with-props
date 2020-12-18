@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 import MovieCard from './MovieCard'
 
-class ListMovieCard extends Component {
+/*class ListMovieCard extends Component {
   
   constructor(props){
     super(props);
@@ -13,7 +13,7 @@ class ListMovieCard extends Component {
     this.profiles = profiles;
     this.movies = movies;
     
-    /*
+    
     We can manually map the users by the movieID they liked. Calling the built-in map function will still do what we want but arrow functions expects a return value.
     So lets not abuse the map function. Use map function when you dont have areturn value and you want to print a new array or compare the keys of the listArray you use to map against another list with its keys
     Remember the good thing about using map is adding data with a key along it. eg { key: [1, 2]} or { 2: {name: "me", pass: 123}} the key can be anything you want.
@@ -23,7 +23,7 @@ class ListMovieCard extends Component {
     
     From the profiles
     
-    */
+    
     for (const {favoriteMovieID, userID} of profiles) {
       const movieID = favoriteMovieID
 
@@ -49,6 +49,46 @@ class ListMovieCard extends Component {
     ));
     return <div>{movieCards}</div>
   }
+}*/
+
+const ListMovieCard = props => {
+  const { users, profiles, movies } = props;
+
+  let usersByMovie = {};
+
+  /*
+    We can manually map the users by the movieID they liked. Calling the built-in map function will still do what we want but arrow functions expects a return value.
+    So lets not abuse the map function. Use map function when you dont have areturn value and you want to print a new array or compare the keys of the listArray you use to map against another list with its keys
+    Remember the good thing about using map is adding data with a key along it. eg { key: [1, 2]} or { 2: {name: "me", pass: 123}} the key can be anything you want.
+    
+    So we return a have a new list of profiles. The indexes of this list will represent a movieID.
+    if a moviID as index dont exist, it will be because in the profiles, none of the user has the movie as favourite
+    
+    From the profiles
+    
+  */
+  for (const {favoriteMovieID, userID} of profiles) {
+    const movieID = favoriteMovieID
+
+    if (usersByMovie[movieID]) { //if an index already exist that represent the movie, we push the new userID inside the array we have that represents what user(s) liked the movie eg: with 5 being the newuserID {2: ["4", "5"]}
+        usersByMovie[movieID].push(userID);
+    } else {
+        usersByMovie[movieID] = [userID]; //the index, dont exit, so we instatiate a new index and add this user as the first person to like the movie  eg: {5: ["4"]}
+    }
+  }
+
+  const movieCards = Object.keys(movies).map(id => (
+  //we print the movieCards in a loop
+    <MovieCard
+     key={id}
+      users={users}
+      usersWhoLikedMovie={usersByMovie[id]} //eg ["1", "2"]
+      movieInfo={movies[id]}
+    />
+  ));
+  return <div>{movieCards}</div>
+
+
 }
 
 export default ListMovieCard

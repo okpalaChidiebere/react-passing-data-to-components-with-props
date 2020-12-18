@@ -1,7 +1,7 @@
 import React from 'react'
 import UsersList from './UsersList'
 
-class MovieCard extends React.Component {
+/*class MovieCard extends React.Component {
   //This component will be called in a loop.
   render(){
     
@@ -15,6 +15,19 @@ class MovieCard extends React.Component {
       </span>
     );
   }
+}*/
+
+const MovieCard = props => {
+  //This component will be called in a loop.
+  const { users, usersWhoLikedMovie, movieInfo } = props;
+    
+  return (
+    <span key={movieInfo.id}> 
+      <h2>{movieInfo.name}</h2>
+      <h3>Liked By:</h3>
+      <UsersList usersWhoLikedMovie={usersWhoLikedMovie} users={users} />
+    </span>
+  );
 }
 
 export default MovieCard

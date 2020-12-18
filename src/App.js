@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import ListProfiles from './ListProfiles';
@@ -96,7 +96,7 @@ const movies = {
 
 
 
-class App extends Component {
+/*class App extends Component {
 
   constructor(props) {
     super(props);
@@ -127,6 +127,21 @@ class App extends Component {
       </div>
     )
   }
+}*/
+
+const App = () => {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <h1 className="App-title">ReactND - Coding Practice</h1>
+      </header>
+      <h2>How Popular is Your Favorite Movie?</h2>
+      <ListProfiles profiles={profiles} movies={movies} users={users}/>
+      <ListMovieCard users={users} movies={movies} profiles={profiles}/>
+    </div>
+  )
+
 }
 
 
