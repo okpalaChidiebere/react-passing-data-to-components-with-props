@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import ListProfiles from './ListProfiles';
+import ListMovieCard from './ListMovieCard';
 
 const profiles = [
   {
@@ -96,6 +97,22 @@ const movies = {
 
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.usersByMovie = {};
+
+    profiles.forEach(profile => {
+      const movieID = profile.favoriteMovieID;
+
+      if (this.usersByMovie[movieID]) {
+        this.usersByMovie[movieID].push(profile.userID);
+      } else {
+        this.usersByMovie[movieID] = [profile.userID];
+      }
+    });
+  }
+
   render() {	
     
     return (
@@ -106,6 +123,7 @@ class App extends Component {
         </header>
         <h2>How Popular is Your Favorite Movie?</h2>
         <ListProfiles profiles={profiles} movies={movies} users={users}/>
+        <ListMovieCard users={users} movies={movies} profiles={profiles}/>
       </div>
     )
   }
